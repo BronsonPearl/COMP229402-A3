@@ -1,19 +1,34 @@
 import jwt from 'jsonwebtoken';
+import UserModel from '../models/user-model.js';
 
-const authMiddleware = (req, res, next) => {
-    const token = req.headers.authorization? req.headers.authorization.split(' ')[1] : null; // Token: "Bearer <token>"
+const authMiddleware = async (req, res, next) => {
+    const header = req.headers.authorization; // "Bearer <token>"
+    const token = header && header.startsWith('Bearer ') ? header.split(' ')[1] : null;
 
-    if(!token) {
+    if (!token) {
         return res.status(401).json({ message: 'No token provided' });
     }
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+
+        const user = await UserModel.findById(decoded.id).select('-password');
+        if (!user) {
+            return res.status(401).json({ message: 'User no longer exists' });
+        }
+
+        req.user = user;
         next();
     } catch (error) {
         return res.status(401).json({ message: 'Invalid token' });
     }
+}
+
+export const requireAdmin = (req, res, next) => {
+    if (req.user?.role !== 'admin') {
+        return res.status(403).json({ message: 'Admin access required' });
+    }
+    next();
 }
 
 export default authMiddleware;

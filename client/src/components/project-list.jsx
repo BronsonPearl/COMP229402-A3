@@ -5,12 +5,24 @@ import {
   TableHead, TableRow, Typography,
 } from '@mui/material'
 
+// Read the role from the JWT payload. This only controls what is displayed;
+// the server enforces access with its own admin check.
+const getRole = (token) => {
+  try {
+    const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    return JSON.parse(atob(payload)).role
+  } catch {
+    return null
+  }
+}
+
 const ProjectList = ({ token, onAuth }) => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const isAdmin = getRole(token) === 'admin'
 
   useEffect(() => {
     const controller = new AbortController()
@@ -60,12 +72,16 @@ const ProjectList = ({ token, onAuth }) => {
     }
   }
 
+  const columnCount = isAdmin ? 5 : 4
+
   return (
     <Stack spacing={3} sx={{ mt: 5 }}>
       <Typography component="h1" variant="h4" align="center" color="primary">Projects</Typography>
       {error && <Alert severity="error">{error}</Alert>}
-      <Button variant="contained" sx={{ alignSelf: 'flex-start' }}
-        onClick={() => navigate('/project-details')}>Create New Project</Button>
+      {isAdmin && (
+        <Button variant="contained" sx={{ alignSelf: 'flex-start' }}
+          onClick={() => navigate('/project-details')}>Create New Project</Button>
+      )}
       <TableContainer>
         <Table aria-label="Projects">
           <TableHead>
@@ -74,24 +90,26 @@ const ProjectList = ({ token, onAuth }) => {
               <TableCell>Description</TableCell>
               <TableCell>Start Date</TableCell>
               <TableCell>End Date</TableCell>
-              <TableCell>Actions</TableCell>
+              {isAdmin && <TableCell>Actions</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
-            {loading ? <TableRow><TableCell colSpan={5}>Loading projects…</TableCell></TableRow>
-              : projects.length === 0 ? <TableRow><TableCell colSpan={5}>No projects available</TableCell></TableRow>
+            {loading ? <TableRow><TableCell colSpan={columnCount}>Loading projects…</TableCell></TableRow>
+              : projects.length === 0 ? <TableRow><TableCell colSpan={columnCount}>No projects available</TableCell></TableRow>
               : projects.map((project) => (
                 <TableRow key={project._id}>
                   <TableCell component="th" scope="row">{project.name}</TableCell>
                   <TableCell sx={{ overflowWrap: 'anywhere' }}>{project.description}</TableCell>
                   <TableCell sx={{ whiteSpace: 'nowrap' }}>{project.startDate?.slice(0, 10)}</TableCell>
                   <TableCell sx={{ whiteSpace: 'nowrap' }}>{project.endDate?.slice(0, 10)}</TableCell>
-                  <TableCell>
-                    <Stack direction="row" spacing={1}>
-                      <Button onClick={() => navigate(`/project-details/${project._id}`)}>Update</Button>
-                      <Button color="error" disabled={deleting} onClick={() => handleDelete(project)}>Delete</Button>
-                    </Stack>
-                  </TableCell>
+                  {isAdmin && (
+                    <TableCell>
+                      <Stack direction="row" spacing={1}>
+                        <Button onClick={() => navigate(`/project-details/${project._id}`)}>Update</Button>
+                        <Button color="error" disabled={deleting} onClick={() => handleDelete(project)}>Delete</Button>
+                      </Stack>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
           </TableBody>

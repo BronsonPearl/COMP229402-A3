@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material/styles";
-import unicornbikeImg from "./../assets/images/unicornbikeImg.jpg";
+import unicornBike from "../assets/images/unicornbikeImg.jpg";
 
 const Home = () => {
   const theme = useTheme();
@@ -28,16 +28,16 @@ const Home = () => {
           color: theme.custom?.openTitle || theme.palette.primary.main,
         }}        
       >
-        Home Page
+        Home
       </Typography>
       <CardMedia
         sx={{ minHeight: 400 }}
-        image={unicornbikeImg}
-        title="Unicorn Bike"
+        image={unicornBike}
+        title="unicorn Bike"
       />
       <CardContent>
         <Typography variant="body2" component="p">
-          Welcome to the MERN Skeleton home page.
+          Welcome to the Bronson's Portfolio home page.
         </Typography>
       </CardContent>
     </Card>

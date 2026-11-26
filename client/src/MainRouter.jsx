@@ -21,7 +21,7 @@ const MainRouter = () => {
     <>
       <AppBar position="static">
         <Toolbar sx={{ gap: 2, flexWrap: 'wrap' }}>
-          <Typography component="span" variant="h6" sx={{ flexGrow: 1 }}>COMP229 MERN</Typography>
+          <Typography component="span" variant="h6" sx={{ flexGrow: 1 }}>COMP229 MERN PORTFOLIO PROJECT</Typography>
           <Button color="inherit" component={Link} to="/">Home</Button>
           <Button color="inherit" component={Link} to="/projects">Projects</Button>
           {token

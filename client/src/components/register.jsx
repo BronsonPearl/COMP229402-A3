@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Alert, Button, Card, CardContent, Stack, TextField, Typography } from '@mui/material'
 
 const Register = ({ onAuth }) => {
-  const [form, setForm] = useState({ name: '', email: '', password: '' })
+  const [form, setForm] = useState({ username: '', email: '', password: '' })
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
   const navigate = useNavigate()
@@ -39,7 +39,7 @@ const Register = ({ onAuth }) => {
       <CardContent>
         <Typography component="h1" variant="h4" align="center" color="primary" gutterBottom>Register</Typography>
         <Stack component="form" spacing={2} onSubmit={handleSubmit}>
-          <TextField required label="Name" name="name" value={form.name} onChange={handleChange} />
+          <TextField required label="Username" name="username" value={form.username} onChange={handleChange} />
           <TextField required label="Email" type="email" name="email" value={form.email} onChange={handleChange} />
           <TextField required label="Password" type="password" name="password" value={form.password}
             onChange={handleChange} autoComplete="new-password" />

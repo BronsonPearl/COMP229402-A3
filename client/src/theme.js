@@ -6,13 +6,13 @@ const theme = createTheme({
 		mode: "dark",
 		primary: {
 			light: "#5c67a3",
-			main: "#ef4771",
-			dark: "#2e355b",
+			main: "#8FA8FF",
+			dark: "#2F5BFF",
 			constrastText: "#fff",
 		},
 		secondary: {
-			light: "#ff79b0",
-			main: "#ff4081",
+			light: "#2F5BFF",
+			main: "#8FA8FF",
 			dark: "#c60055",
 			contrastText: "#000",
 		},

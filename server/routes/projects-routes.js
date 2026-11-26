@@ -6,6 +6,7 @@ import {
     getProjectById,
     updateProject
 } from '../controllers/projects-controllers.js';
+import authMiddleware, { requireAdmin } from '../middlewares/auth.js';
 
 const router = express.Router();
 
@@ -17,17 +18,18 @@ router.use((req, res, next) => {
 
 // REST API simulate CRUD
 
-// READs
-router.get("/", getAllProjects);
-router.get("/:id", getProjectById);
+// READs any signed-in user
+router.get("/", authMiddleware, getAllProjects);
+router.get("/:id", authMiddleware, getProjectById);
 
+// WRITES admin only
 // CREATE
-router.post("/", createProject);
+router.post("/", authMiddleware, requireAdmin, createProject);
 
 // UPDATE
-router.put("/:id", updateProject);
+router.put("/:id", authMiddleware, requireAdmin, updateProject);
 
 // DELETE
-router.delete("/:id", deleteProject);
+router.delete("/:id", authMiddleware, requireAdmin, deleteProject);
 
 export default router;
