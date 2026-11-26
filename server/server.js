@@ -6,9 +6,13 @@ import express from 'express'; // ES6 and newer javascript
 
 import projectsRoutes from './routes/projects-routes.js';
 import userRoutes from './routes/user-routes.js';
+import contactRoutes from './routes/contact-routes.js';
+//import qualificationRoutes from './routes/qualification-routes.js';
 
 
-// Establish DB Connection
+
+
+
 mongoose.connect(process.env.MONGO_URI);
 const connection = mongoose.connection; 
 connection.on('error', console.error.bind(console, 'connection error:'));
@@ -16,12 +20,12 @@ connection.on('error', console.error.bind(console, 'connection error:'));
 
 const app = express(); 
 
-app.use(express.json()); // for parsing application/json
+app.use(express.json());
 
-// Authentication and admin checks are applied per route inside each router
 app.use('/projects', projectsRoutes);
 app.use('/users', userRoutes);
-
+app.use('/contacts', contactRoutes);
+//app.use('/qualifications', qualificationRoutes);
 
 app.listen(3001);
 

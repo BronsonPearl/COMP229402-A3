@@ -7,6 +7,8 @@ import Login from './components/login.jsx'
 import Register from './components/register.jsx'
 import ProjectList from './components/project-list.jsx'
 import ProjectDetails from './components/project-details.jsx'
+import Contact from './components/contact.jsx'           
+import Qualifications from './components/qualifications.jsx'
 
 const MainRouter = () => {
   const [token, setToken] = useState(() => localStorage.getItem('token') || '')
@@ -30,6 +32,8 @@ const MainRouter = () => {
               <Button color="inherit" component={Link} to="/register">Register</Button>
               <Button color="inherit" component={Link} to="/login">Login</Button>
             </>}
+          <Button color="inherit" component={Link} to="/contact">Contact</Button>
+          <Button color="inherit" component={Link} to="/qualifications">Qualifications</Button>
         </Toolbar>
       </AppBar>
       <Container maxWidth="md" sx={{ pb: 4 }}>
@@ -37,6 +41,8 @@ const MainRouter = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onAuth={onAuth} />} />
           <Route path="/register" element={<Register onAuth={onAuth} />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/qualifications" element={<Qualifications />} />
           <Route path="/projects" element={token
             ? <ProjectList token={token} onAuth={onAuth} />
             : <Navigate to="/login" replace />} />
