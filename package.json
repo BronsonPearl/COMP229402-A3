@@ -1,5 +1,4 @@
 {
-  {
   "name": "a3",
   "version": "1.0.0",
   "description": "Bronson Pearl MERN porfolio",
@@ -18,10 +17,5 @@
     "build": "npm run install:all && npm run build --prefix client",
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "dotenv": "^18.0.8",
-    "jsonwebtoken": "^9.0.3",
-    "vite": "^8.3.8"
   }
-}"name": "a3",
+}
