@@ -1,6 +1,26 @@
 {
+  "name": "a3",
+  "version": "1.0.0",
+  "description": "Bronson Pearl MERN porfolio",
+  "homepage": "https://github.com/BronsonPearl/COMP229402-A3#readme",
+  "bugs": {
+    "url": "https://github.com/BronsonPearl/COMP229402-A3/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BronsonPearl/COMP229402-A3.git"
+  },
+  "type": "commonjs",
+  "main": "server/server.js",
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "build": "npm run install:all && npm run build --prefix client",
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "dotenv": "^18.0.8",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "vite": "^8.3.8"
   }
 }
