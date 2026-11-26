@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# dont allow scrape of API and admin-only form pages
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+Disallow: /project-details
+Disallow: /qualification-details
